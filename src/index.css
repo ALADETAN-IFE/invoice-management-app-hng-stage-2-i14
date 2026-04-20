@@ -1,1 +1,57 @@
 @import "tailwindcss";
+
+/* Raw palette from the provided task design */
+:root {
+	--color-7c5dfa: #7c5dfa;
+	--color-9277ff: #9277ff;
+	--color-1e2139: #1e2139;
+	--color-252945: #252945;
+	--color-dfe3fa: #dfe3fa;
+	--color-888eb0: #888eb0;
+	--color-7e88c3: #7e88c3;
+	--color-0c0e16: #0c0e16;
+	--color-ec5757: #ec5757;
+	--color-ff9797: #ff9797;
+	--color-f8f8fb: #f8f8fb;
+	--color-141625: #141625;
+
+	/* Semantic tokens (light mode default) */
+	--bg-page: var(--color-f8f8fb);
+	--bg-surface: #ffffff;
+	--bg-elevated: var(--color-dfe3fa);
+	--text-primary: var(--color-0c0e16);
+	--text-secondary: var(--color-7e88c3);
+	--text-muted: var(--color-888eb0);
+	--border-default: var(--color-dfe3fa);
+	--accent-primary: var(--color-7c5dfa);
+	--accent-primary-hover: var(--color-9277ff);
+	--danger: var(--color-ec5757);
+	--danger-hover: var(--color-ff9797);
+}
+
+/* Dark theme tokens */
+.dark {
+	--bg-page: var(--color-141625);
+	--bg-surface: var(--color-1e2139);
+	--bg-elevated: var(--color-252945);
+	--text-primary: #ffffff;
+	--text-secondary: var(--color-dfe3fa);
+	--text-muted: var(--color-888eb0);
+	--border-default: var(--color-252945);
+}
+
+/* Optional Tailwind v4 tokens for utility usage */
+@theme {
+	--color-brand: #7c5dfa;
+	--color-brand-hover: #9277ff;
+	--color-surface-dark: #1e2139;
+	--color-surface-darker: #252945;
+	--color-line: #dfe3fa;
+	--color-muted: #888eb0;
+	--color-subtle: #7e88c3;
+	--color-ink: #0c0e16;
+	--color-danger: #ec5757;
+	--color-danger-hover: #ff9797;
+	--color-app-bg: #f8f8fb;
+	--color-app-bg-dark: #141625;
+}
