@@ -26,7 +26,7 @@ const Dashboard = () => {
   }, [selectedStatus]);
 
   return (
-    <div className="w-full h-full flex justify-center bg-(--bg-page) pt-8 sm:pt-15.25 lg:pt-19.25">
+    <div className="w-full h-full flex justify-center pt-8 sm:pt-15.25 lg:pt-19.25">
       <div className="flex flex-col w-9/10 lg:w-182.5">
         <DashboardHeader
           totalCount={invoices.length}
