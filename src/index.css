@@ -25,6 +25,7 @@
 	--color-373B53: #373B53;
 	--color-494E6E: #494E6E;
 	--color-858BB2: #858BB2;
+	--color-F9FAFE: #F9FAFE;
 
 	/* Semantic tokens (light mode default) */
 	--bg-page: var(--color-f8f8fb);
@@ -34,13 +35,16 @@
 	--text-primary: var(--color-0c0e16);
 	--text-secondary: var(--color-7e88c3);
 	--text-muted: var(--color-888eb0);
+	--text-back: var(--color-7e88c3);
 	--text-tetiary:var(--color-858BB2);
 	--border-default: var(--color-dfe3fa);
+	--item-table: var(--color-F9FAFE);
 	--accent-primary: var(--color-7c5dfa);
 	--accent-primary-hover: var(--color-9277ff);
 	--danger: var(--color-ec5757);
 	--danger-hover: var(--color-ff9797);
 	--sidebar-bg: var(--color-373B53);
+	--invoice-amount-bg: var(--color-373B53);
 	--hr-color: var(--color-494E6E);
 	--theme-icon: var(--color-858BB2);
 	--theme-icon-hover: var(--color-dfe3fa);
@@ -55,9 +59,12 @@
 	--text-primary: #ffffff;
 	--text-secondary: var(--color-dfe3fa);
 	--text-tetiary:#ffffff;
+	--text-back: var(--color-888eb0);
 	--text-muted: var(--color-dfe3fa);
 	--border-default: var(--color-252945);
+	--item-table: var(--color-252945);
 	--sidebar-bg: var(--color-1e2139);
+	--invoice-amount-bg: var(--color-0c0e16);
 }
 
 #root {

@@ -1,51 +1,214 @@
 [
   {
     "id": "RT3080",
+    "status": "paid",
+    "description": "Re-branding",
     "dueDate": "19 Aug 2021",
+    "invoiceDate": "13 Aug 2021",
+    "paymentDue": "20 Sep 2021",
     "clientName": "Jensen Huang",
-    "total": 1800.9,
-    "status": "paid"
+    "sentTo": "jensenh@mail.com",
+    "billTo": {
+      "name": "Jensen Huang",
+      "street": "769 Torchwood Lane",
+      "city": "London",
+      "postCode": "N1 7PT",
+      "country": "United Kingdom"
+    },
+    "items": [
+      {
+        "name": "Brand Guide",
+        "qty": 1,
+        "price": 1800.9,
+        "total": 1800.9
+      }
+    ],
+    "total": 1800.9
   },
   {
     "id": "XM9141",
-    "dueDate": "20 Sep 2021",
+    "status": "pending",
+    "description": "Graphic Design",
+    "dueDate": "21 Aug 2021",
+    "invoiceDate": "15 Aug 2021",
+    "paymentDue": "20 Sep 2021",
     "clientName": "Alex Grim",
-    "total": 556,
-    "status": "pending"
+    "sentTo": "alexgrim@mail.com",
+    "billTo": {
+      "name": "Alex Grim",
+      "street": "84 Church Way",
+      "city": "Bradford",
+      "postCode": "BD1 9PB",
+      "country": "United Kingdom"
+    },
+    "items": [
+      {
+        "name": "Banner Design",
+        "qty": 1,
+        "price": 156.0,
+        "total": 156.0
+      },
+      {
+        "name": "Email Design",
+        "qty": 2,
+        "price": 200.0,
+        "total": 400.0
+      }
+    ],
+    "total": 556.0
   },
   {
     "id": "RG0314",
+    "status": "paid",
+    "description": "Website Redesign",
     "dueDate": "01 Oct 2021",
+    "invoiceDate": "24 Sep 2021",
+    "paymentDue": "01 Oct 2021",
     "clientName": "John Morrison",
-    "total": 14002.33,
-    "status": "paid"
+    "sentTo": "john@mail.com",
+    "billTo": {
+      "name": "John Morrison",
+      "street": "123 High Street",
+      "city": "Manchester",
+      "postCode": "M1 1AD",
+      "country": "United Kingdom"
+    },
+    "items": [
+      {
+        "name": "Website Design",
+        "qty": 1,
+        "price": 6000.0,
+        "total": 6000.0
+      },
+      {
+        "name": "Mobile Optimization",
+        "qty": 1,
+        "price": 8002.33,
+        "total": 8002.33
+      }
+    ],
+    "total": 14002.33
   },
   {
     "id": "RT2080",
+    "status": "pending",
+    "description": "Logo Design",
     "dueDate": "12 Oct 2021",
+    "invoiceDate": "08 Oct 2021",
+    "paymentDue": "12 Oct 2021",
     "clientName": "Alysa Werner",
-    "total": 102.04,
-    "status": "pending"
+    "sentTo": "alysa@mail.com",
+    "billTo": {
+      "name": "Alysa Werner",
+      "street": "456 Oak Avenue",
+      "city": "Birmingham",
+      "postCode": "B1 1AA",
+      "country": "United Kingdom"
+    },
+    "items": [
+      {
+        "name": "Logo Design",
+        "qty": 1,
+        "price": 102.04,
+        "total": 102.04
+      }
+    ],
+    "total": 102.04
   },
   {
     "id": "AA1449",
+    "status": "pending",
+    "description": "Web Development",
     "dueDate": "14 Oct 2021",
+    "invoiceDate": "10 Oct 2021",
+    "paymentDue": "14 Oct 2021",
     "clientName": "Mellisa Clarke",
-    "total": 4032.33,
-    "status": "pending"
+    "sentTo": "mellisa@mail.com",
+    "billTo": {
+      "name": "Mellisa Clarke",
+      "street": "789 Park Road",
+      "city": "Leeds",
+      "postCode": "LS1 1AA",
+      "country": "United Kingdom"
+    },
+    "items": [
+      {
+        "name": "Frontend Development",
+        "qty": 1,
+        "price": 2000.0,
+        "total": 2000.0
+      },
+      {
+        "name": "Backend Development",
+        "qty": 1,
+        "price": 2032.33,
+        "total": 2032.33
+      }
+    ],
+    "total": 4032.33
   },
   {
     "id": "TY9141",
+    "status": "pending",
+    "description": "Mobile App Development",
     "dueDate": "31 Oct 2021",
+    "invoiceDate": "20 Oct 2021",
+    "paymentDue": "31 Oct 2021",
     "clientName": "Thomas Wayne",
-    "total": 6155.91,
-    "status": "pending"
+    "sentTo": "thomas@mail.com",
+    "billTo": {
+      "name": "Thomas Wayne",
+      "street": "321 Elm Street",
+      "city": "Liverpool",
+      "postCode": "L1 1AA",
+      "country": "United Kingdom"
+    },
+    "items": [
+      {
+        "name": "iOS Development",
+        "qty": 1,
+        "price": 3000.0,
+        "total": 3000.0
+      },
+      {
+        "name": "Android Development",
+        "qty": 1,
+        "price": 3155.91,
+        "total": 3155.91
+      }
+    ],
+    "total": 6155.91
   },
   {
     "id": "FV2353",
+    "status": "draft",
+    "description": "UI/UX Design",
     "dueDate": "12 Nov 2021",
+    "invoiceDate": "05 Nov 2021",
+    "paymentDue": "12 Nov 2021",
     "clientName": "Anita Wainwright",
-    "total": 3102.04,
-    "status": "draft"
+    "sentTo": "anita@mail.com",
+    "billTo": {
+      "name": "Anita Wainwright",
+      "street": "654 Rose Lane",
+      "city": "Bristol",
+      "postCode": "BS1 1AA",
+      "country": "United Kingdom"
+    },
+    "items": [
+      {
+        "name": "UI Design",
+        "qty": 1,
+        "price": 1500.0,
+        "total": 1500.0
+      },
+      {
+        "name": "UX Design",
+        "qty": 1,
+        "price": 1602.04,
+        "total": 1602.04
+      }
+    ],
+    "total": 3102.04
   }
 ]

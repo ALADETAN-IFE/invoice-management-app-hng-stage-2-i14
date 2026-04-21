@@ -108,8 +108,8 @@ const InvoiceCard = (invoice: Invoice) => {
 
 const InvoiceCards = ({ invoices }: InvoiceCardProps) => {
   const listRef = useRef<HTMLDivElement | null>(null);
-  const [isOverflowing, setIsOverflowing] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isOverflowing, setIsOverflowing] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [invoiceData, setinvoiceData] = useState<Invoice[]>([]);
 
   useEffect(() => {
