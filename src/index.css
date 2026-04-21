@@ -41,6 +41,7 @@
 	--sidebar-bg: var(--color-373B53);
 	--hr-color: var(--color-494E6E);
 	--theme-icon: var(--color-858BB2);
+	--theme-icon-hover: var(--color-dfe3fa);
 }
 
 /* Dark theme tokens */
@@ -53,7 +54,6 @@
 	--text-muted: var(--color-888eb0);
 	--border-default: var(--color-252945);
 	--sidebar-bg: var(--color-1e2139);
-	--theme-icon: var(--color-858BB2);
 }
 
 #root {

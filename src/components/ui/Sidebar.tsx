@@ -24,9 +24,12 @@ const Sidebar = () => {
             className="flex h-8 w-8 lg:h-10 lg:w-10 rounded-full p-0! bg-transparent! hover:bg-transparent!"
           >
             {theme === "dark" ? (
-              <div className="h-4 w-4 rounded-full bg-(--theme-icon)" />
+              <div className="h-4 w-4 rounded-full bg-(--theme-icon) hover:bg-(--theme-icon-hover) transition-colors duration-300" />
             ) : (
-              <Moon className="text-(--theme-icon)" size={20} />
+              <Moon
+                className="text-(--theme-icon) fill-(--theme-icon) hover:text-(--theme-icon-hover) transition-colors duration-300 hover:fill-(--theme-icon-hover)"
+                size={20}
+              />
             )}
           </Button>
         </div>
