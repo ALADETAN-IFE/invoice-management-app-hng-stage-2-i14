@@ -28,6 +28,7 @@
 
 	/* Semantic tokens (light mode default) */
 	--bg-page: var(--color-f8f8fb);
+	--bg-page-reverse: var(--color-141625);
 	--bg-surface: #ffffff;
 	--bg-elevated: var(--color-dfe3fa);
 	--text-primary: var(--color-0c0e16);
@@ -48,6 +49,7 @@
 /* Dark theme tokens */
 .dark {
 	--bg-page: var(--color-141625);
+  	--bg-page-reverse: var(--color-f8f8fb);
 	--bg-surface: var(--color-1e2139);
 	--bg-elevated: var(--color-252945);
 	--text-primary: #ffffff;
@@ -111,4 +113,8 @@ select {
 }
 ::-webkit-scrollbar-thumb:active {
 	background-color: var(--border-default);
+}
+
+img.mix-blend-color {
+  mix-blend-mode: color;
 }

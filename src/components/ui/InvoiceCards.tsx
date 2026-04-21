@@ -134,7 +134,11 @@ const InvoiceCards = ({ invoices }: InvoiceCardProps) => {
     return (
       <div className="mt-13.75 lg:mt-16 flex flex-col">
         <div className="flex items-center justify-center h-48">
-          <img src="/logo.png" alt="Logo" className="max-w-full animate-spin" />
+          <div
+            role="img"
+            aria-label="Logo"
+            className="h-7 w-7 animate-spin bg-(--bg-page-reverse) mask-[url('/logo.png')] mask-no-repeat mask-center mask-contain"
+          />
         </div>
       </div>
     );
