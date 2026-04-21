@@ -38,7 +38,7 @@ const Sidebar = () => {
             src="/avatar-icon.png"
             alt="avatar-icon"
             aria-label="avatar icon"
-            className="flex h-8 lg:h-10 w-8 lg:w-10 rounded-full bg-amber-800"
+            className="flex h-8 lg:h-10 w-8 lg:w-10 rounded-full bg-(--bg-page) object-cover"
           />
         </div>
       </div>
