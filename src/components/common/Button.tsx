@@ -18,7 +18,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const BASE_BUTTON_CLASS =
-  "inline-flex cursor-pointer items-center justify-center gap-4 rounded-full border border-transparent pl-2 pr-4.25 text-[15px] font-bold tracking-[-0.25px] transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex cursor-pointer items-center justify-center gap-4 rounded-full border border-transparent text-[15px] font-bold tracking-[-0.25px] transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-60";
 
 const VARIANT_CLASS_MAP: Record<ButtonVariant, string> = {
   primary:
@@ -54,7 +54,7 @@ export default function Button({
   return (
     <button
       type={type}
-      className={`${BASE_BUTTON_CLASS} ${VARIANT_CLASS_MAP[variant]} ${SIZE_CLASS_MAP[size]} ${widthClass} ${className}`.trim()}
+      className={`${BASE_BUTTON_CLASS} ${VARIANT_CLASS_MAP[variant]} ${SIZE_CLASS_MAP[size]} ${widthClass} ${className} ${startIcon ? "pl-2 pr-4.25" : "px-4.25"}`.trim()}
       {...props}
     >
       {startIcon ? (
