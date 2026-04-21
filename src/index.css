@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+	font-family: "League Spartan";
+	src: url("./assets/font/LeagueSpartan-VariableFont_wght.ttf") format("truetype");
+	font-style: normal;
+	font-weight: 100 900;
+	font-display: swap;
+}
+
 /* Raw palette from the provided task design */
 :root {
 	--color-7c5dfa: #7c5dfa;
@@ -50,10 +58,21 @@
 
 #root {
 	background-color: var(--bg-page);
+	font-family: "League Spartan", sans-serif;
+}
+
+html,
+body,
+button,
+input,
+textarea,
+select {
+	font-family: "League Spartan", sans-serif;
 }
 
 /* Optional Tailwind v4 tokens for utility usage */
 @theme {
+	--font-sans: "League Spartan", sans-serif;
 	--color-brand: #7c5dfa;
 	--color-brand-hover: #9277ff;
 	--color-surface-dark: #1e2139;
