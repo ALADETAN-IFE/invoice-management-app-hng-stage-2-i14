@@ -100,8 +100,16 @@ const InvoiceCard = (invoice: Invoice) => {
 const InvoiceCards = ({ invoices }: InvoiceCardProps) => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [invoiceData, setinvoiceData] = useState<Invoice[]>([]);
 
   useEffect(() => {
+    setTimeout(() => {
+      if (!isLoading) return;
+      setIsLoading(false);
+      setinvoiceData(invoices);
+    }, 2000);
+
     const element = listRef.current;
 
     if (!element) {
@@ -120,7 +128,17 @@ const InvoiceCards = ({ invoices }: InvoiceCardProps) => {
     return () => {
       observer.disconnect();
     };
-  }, [invoices]);
+  }, [invoices, isLoading]);
+
+  if (isLoading) {
+    return (
+      <div className="mt-13.75 lg:mt-16 flex flex-col">
+        <div className="flex items-center justify-center h-48">
+          <img src="/logo.png" alt="Logo" className="max-w-full animate-spin" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -129,9 +147,25 @@ const InvoiceCards = ({ invoices }: InvoiceCardProps) => {
         isOverflowing ? "pr-2" : ""
       }`}
     >
-      {invoices.map((invoice) => (
-        <InvoiceCard key={invoice.id} {...invoice} />
-      ))}
+      {invoiceData.length === 0 ? (
+        <div className="flex flex-col items-center gap-6 pt-11.75 lg:pt-19">
+          <img src="/Empty.png" alt="No invoices found" />
+          <Typography variant="h2" as="h2">
+            There is nothing here
+          </Typography>
+          <Typography
+            variant="body"
+            as="span"
+            className="max-w-48.25 text-center"
+          >
+            Create an invoice by clicking the New Invoice button and get started
+          </Typography>
+        </div>
+      ) : (
+        invoiceData.map((invoice) => (
+          <InvoiceCard key={invoice.id} {...invoice} />
+        ))
+      )}
     </div>
   );
 };
