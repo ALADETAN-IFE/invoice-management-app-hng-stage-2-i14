@@ -18,7 +18,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const BASE_BUTTON_CLASS =
-  "inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-transparent px-5 text-xs font-bold tracking-[0.25px] transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-primary)] disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex cursor-pointer items-center justify-center gap-4 rounded-full border border-transparent pl-2 pr-4.25 text-[15px] font-bold tracking-[-0.25px] transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-60";
 
 const VARIANT_CLASS_MAP: Record<ButtonVariant, string> = {
   primary:
@@ -58,7 +58,7 @@ export default function Button({
       {...props}
     >
       {startIcon ? (
-        <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white text-(--accent-primary)">
+        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-(--accent-primary) fill-(--accent-primary)">
           {startIcon}
         </span>
       ) : null}
