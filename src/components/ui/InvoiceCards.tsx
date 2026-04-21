@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronRight } from "lucide-react";
 import { Typography } from "../common";
+import { useNavigate } from "react-router-dom";
 
 type InvoiceStatus = "draft" | "pending" | "paid";
 
@@ -46,10 +47,18 @@ const formatCurrency = (value: number) => {
 
 const InvoiceCard = (invoice: Invoice) => {
   const statusClasses = statusClassMap[invoice.status];
+  const invoiceId = invoice.id;
+  const navigate = useNavigate();
+  
+  const handleViewDetails = () => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    navigate(`/invoice/${invoiceId}`);
+  };
 
   return (
     <article
-      key={invoice.id}
+      key={invoiceId}
+      onClick={handleViewDetails}
       className="grid grid-cols-2 max-sm:justify-between gap-4 rounded-lg bg-(--bg-surface) px-6 py-6 shadow-sm sm:grid-cols-[1fr_1fr_1.2fr_1fr_auto] hover:border hover:border-(--accent-primary) cursor-pointer sm:items-center"
     >
       <Typography variant="h3" as="p">

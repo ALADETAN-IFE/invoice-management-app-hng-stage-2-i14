@@ -2,13 +2,16 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { Layout } from "@/layouts";
 import NotFound from "@/pages/NotFound";
-import { Dashboard } from "@/pages";
+import { Dashboard, Invoice } from "@/pages";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    children: [{ index: true, element: <Dashboard /> }],
+    children: [
+      { index: true, element: <Dashboard /> },
+      { path: "invoice/:id", element: <Invoice /> },
+    ],
   },
 
   { path: "*", element: <NotFound /> },
