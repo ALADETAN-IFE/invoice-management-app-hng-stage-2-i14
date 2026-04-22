@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import { Button, Typography } from "../components/common";
@@ -108,7 +106,6 @@ const Invoice = () => {
   };
 
   const confirmDelete = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     deleteInvoice(invoice.id);
     setIsDeleteOpen(false);
     void navigate("/");
