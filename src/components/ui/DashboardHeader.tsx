@@ -44,6 +44,23 @@ const DashboardHeader = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (!isFilterOpen) {
+      return;
+    }
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsFilterOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [isFilterOpen]);
+
 
   setTimeout(() => {
     setSummaryText(selectedStatus
@@ -86,6 +103,7 @@ const DashboardHeader = ({
             className="inline-flex cursor-pointer items-center gap-3 rounded-md py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--accent-primary)"
             aria-expanded={isFilterOpen}
             aria-haspopup="menu"
+            aria-controls="invoice-status-filter-menu"
           >
             <Typography variant="h3" as="span" className="sm:hidden flex">
               Filter
@@ -102,7 +120,9 @@ const DashboardHeader = ({
 
           {isFilterOpen ? (
             <div
+              id="invoice-status-filter-menu"
               role="menu"
+              aria-label="Filter invoices by status"
               className="absolute right-0 top-12 z-20 w-48 rounded-lg bg-(--bg-surface) p-4 shadow-[0_10px_20px_rgba(72,84,159,0.25)]"
             >
               <div className="flex flex-col gap-3">
