@@ -133,7 +133,6 @@ const Invoice = () => {
           </Typography>
         </button>
 
-        {/* Header with Status and Actions */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-(--bg-surface) rounded-lg px-6 py-6 shadow-sm">
           <div className="flex items-center gap-4 max-sm:justify-between max-sm:w-full">
             <Typography variant="bodyMuted" as="span">
@@ -186,7 +185,6 @@ const Invoice = () => {
           </div>
         </div>
 
-        {/* Invoice Details */}
         <div className="bg-(--bg-surface) rounded-lg px-6 py-8 shadow-sm">
           <div className="mb-12 space-y-8">
             <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
@@ -285,7 +283,6 @@ const Invoice = () => {
             </div>
           </div>
 
-          {/* Items Table */}
           <div>
             <div className="rounded-t-lg bg-(--item-table) px-6 py-6 sm:hidden">
               <div className="space-y-6">

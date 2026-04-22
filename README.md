@@ -1,73 +1,54 @@
-# React + TypeScript + Vite
+# Frontend Wizards Invoice Management App - hng-stage-2(i14)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is the HNG Frontend Stage 2 task implementation: a testable, accessible, and responsive invoice management application.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + TypeScript
+- Vite
+- Tailwind CSS v4
+- React Router DOM
 
-## React Compiler
+## Task Coverage
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Invoice list view with status badges (`draft`, `pending`, `paid`)
+- Create invoice flow with form validation
+- Edit existing invoices and persist updates
+- Save invoice as draft and send as pending
+- Mark pending invoices as paid
+- Delete invoice with confirmation modal
+- Responsive layouts for mobile, tablet, and desktop
 
-## Expanding the ESLint configuration
+## Run Locally
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Build
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
 ```
+
+## Preview Production Build
+
+```bash
+npm run preview
+```
+
+## Live Demo
+- Vercel deployment: [Vercel](https://invoice-management-app-hng.vercel.app)
+
+## Author
+
+- Name: Fortune Ife Aladetan
+- Email: [contact@ifecodes.xyz](mailto:fortuneifealadetan01@gmail.com)
+- GitHub: [ALADETAN-IFE](https://github.com/ALADETAN-IFE)
+- Portfolio: [ifecodes.xyz](https://www.ifecodes.xyz)
+
+## Notes
+
+- Invoice state is managed in-app via the invoice context.
+- Core actions supported: create, edit, status updates, and delete.

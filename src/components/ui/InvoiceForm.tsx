@@ -134,7 +134,7 @@ export default function InvoiceForm({
                     htmlFor="move-from-draft"
                     className="text-[13px] leading-3.75 font-medium tracking-[-0.1px] text-(--text-secondary)"
                   >
-                    Move from draft (requires validation)
+                    Move to pending
                   </label>
                 </div>
               ) : null}
