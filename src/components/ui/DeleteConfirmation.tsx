@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useId, useRef } from "react";
 import { Button, Typography } from "../common";
 
-type DeleteConfirmationProps = {
+interface DeleteConfirmationProps {
   isOpen: boolean;
   invoiceId: string;
   onCancel: () => void;
@@ -14,19 +14,51 @@ export default function DeleteConfirmation({
   onCancel,
   onConfirm,
 }: DeleteConfirmationProps) {
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+  const dialogTitleId = useId();
+
   useEffect(() => {
     if (!isOpen) {
       return;
     }
 
+    const dialogElement = dialogRef.current;
+    const focusableSelector =
+      "button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])";
+    const focusableElements = dialogElement
+      ? Array.from(dialogElement.querySelectorAll<HTMLElement>(focusableSelector))
+      : [];
+    const firstFocusableElement = focusableElements.at(0);
+    const lastFocusableElement = focusableElements.at(-1);
+    firstFocusableElement?.focus();
+
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
+        event.preventDefault();
         onCancel();
+        return;
+      }
+
+      if (event.key !== "Tab" || !firstFocusableElement || !lastFocusableElement) {
+        return;
+      }
+
+      if (event.shiftKey && document.activeElement === firstFocusableElement) {
+        event.preventDefault();
+        lastFocusableElement.focus();
+        return;
+      }
+
+      if (!event.shiftKey && document.activeElement === lastFocusableElement) {
+        event.preventDefault();
+        firstFocusableElement.focus();
       }
     };
 
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+    };
   }, [isOpen, onCancel]);
 
   if (!isOpen) {
@@ -42,8 +74,14 @@ export default function DeleteConfirmation({
         onClick={onCancel}
       />
 
-      <div className="relative w-full max-w-md rounded-lg bg-(--bg-surface) px-8 py-8 shadow-[0_24px_24px_rgba(0,0,0,0.18)]">
-        <Typography variant="h2" as="h2">
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={dialogTitleId}
+        className="relative w-full max-w-md rounded-lg bg-(--bg-surface) px-8 py-8 shadow-[0_24px_24px_rgba(0,0,0,0.18)]"
+      >
+        <Typography variant="h2" as="h2" id={dialogTitleId}>
           Confirm Deletion
         </Typography>
 
