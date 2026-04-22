@@ -106,6 +106,7 @@ const Invoice = () => {
   };
 
   const confirmDelete = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     deleteInvoice(invoice.id);
     setIsDeleteOpen(false);
     void navigate("/");
@@ -404,6 +405,7 @@ const Invoice = () => {
           mode="edit"
           initialValues={{
             invoiceId: invoice.id,
+            status: invoice.status,
             senderStreet: invoice.billFrom.street,
             senderCity: invoice.billFrom.city,
             senderPostCode: invoice.billFrom.postCode,
@@ -426,7 +428,7 @@ const Invoice = () => {
           }}
           onSaveChanges={(values: InvoiceFormValues) => {
             const nextInvoice = buildInvoiceFromForm(values, {
-              status: invoice.status,
+              status: values.status,
               idOverride: invoice.id,
             });
             updateInvoice(invoice.id, nextInvoice);

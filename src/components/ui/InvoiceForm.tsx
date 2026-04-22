@@ -43,23 +43,19 @@ export default function InvoiceForm({
   }
 
   const submitAsDraft = () => {
-    const errors = validateInvoiceForm(formValues, mode);
-
-    if (
-      Object.keys(errors.fields).length > 0 ||
-      Object.keys(errors.items).length > 0 ||
-      errors.general.length > 0
-    ) {
-      setErrors(errors);
-      return;
-    }
-
-    onSaveDraft?.(formValues);
+    onSaveDraft?.({ ...formValues, status: "draft" });
     setErrors(createEmptyErrors());
     onClose();
   };
 
   const submitPrimary = () => {
+    if (mode === "edit" && formValues.status === "draft") {
+      onSaveChanges?.(formValues);
+      setErrors(createEmptyErrors());
+      onClose();
+      return;
+    }
+
     const errors = validateInvoiceForm(formValues, mode);
 
     if (
@@ -78,7 +74,7 @@ export default function InvoiceForm({
       return;
     }
 
-    onSaveAndSend?.(formValues);
+    onSaveAndSend?.({ ...formValues, status: "pending" });
     setErrors(createEmptyErrors());
     onClose();
   };
@@ -119,6 +115,29 @@ export default function InvoiceForm({
               >
                 Bill From
               </Typography>
+
+              {mode === "edit" && initialValues?.status === "draft" ? (
+                <div className="mt-4 flex items-center gap-3">
+                  <input
+                    id="move-from-draft"
+                    type="checkbox"
+                    className="h-4 w-4 accent-(--accent-primary)"
+                    checked={formValues.status !== "draft"}
+                    onChange={(event) => {
+                      updateField(
+                        "status",
+                        event.target.checked ? "pending" : "draft"
+                      );
+                    }}
+                  />
+                  <label
+                    htmlFor="move-from-draft"
+                    className="text-[13px] leading-3.75 font-medium tracking-[-0.1px] text-(--text-secondary)"
+                  >
+                    Move from draft (requires validation)
+                  </label>
+                </div>
+              ) : null}
 
               <div className="mt-6 space-y-6">
                 <Input
