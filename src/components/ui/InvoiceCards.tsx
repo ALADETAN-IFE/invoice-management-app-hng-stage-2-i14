@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronRight } from "lucide-react";
 import { Typography } from "../common";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 type InvoiceStatus = "draft" | "pending" | "paid";
 
@@ -47,67 +47,61 @@ const formatCurrency = (value: number) => {
 
 const InvoiceCard = (invoice: Invoice) => {
   const statusClasses = statusClassMap[invoice.status];
-  const invoiceId = invoice.id;
-  const navigate = useNavigate();
-  
-  const handleViewDetails = () => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    navigate(`/invoice/${invoiceId}`);
-  };
 
   return (
-    <article
-      key={invoiceId}
-      onClick={handleViewDetails}
-      className="grid grid-cols-2 max-sm:justify-between gap-4 rounded-lg bg-(--bg-surface) px-6 py-6 shadow-sm sm:grid-cols-[1fr_1fr_1.2fr_1fr_auto] hover:border hover:border-(--accent-primary) cursor-pointer sm:items-center"
-    >
-      <Typography variant="h3" as="p">
-        <span className="text-muted font-bold">#</span>
-        {invoice.id}
-      </Typography>
-
-      <Typography variant="bodyMuted" as="p" className="max-sm:pt-2">
-        Due {invoice.dueDate}
-      </Typography>
-
-      <Typography
-        variant="body"
-        as="p"
-        className="sm:col-span-1 text-(--text-tetiary) max-sm:col-start-2 max-sm:row-start-1 max-sm:text-end"
+    <li>
+      <Link
+        to={`/invoice/${invoice.id}`}
+        className="grid grid-cols-2 max-sm:justify-between gap-4 rounded-lg bg-(--bg-surface) px-6 py-6 shadow-sm sm:grid-cols-[1fr_1fr_1.2fr_1fr_auto] hover:border hover:border-(--accent-primary) sm:items-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--accent-primary)"
       >
-        {invoice.clientName}
-      </Typography>
+        <Typography variant="h3" as="p">
+          <span className="text-muted font-bold">#</span>
+          {invoice.id}
+        </Typography>
 
-      <Typography
-        variant="h3"
-        as="p"
-        className="text-(--text-primary) max-sm:row-start-3"
-      >
-        £ {formatCurrency(invoice.total)}
-      </Typography>
+        <Typography variant="bodyMuted" as="p" className="max-sm:pt-2">
+          Due <time dateTime={invoice.dueDate}>{invoice.dueDate}</time>
+        </Typography>
 
-      <div className="flex items-center gap-4 max-sm:justify-end max-sm:row-start-2 max-sm:col-start-2 max-sm:row-span-2">
-        <span
-          className={`inline-flex min-w-26 items-center justify-center gap-2 rounded-md px-4 py-3 ${statusClasses.badge}`}
+        <Typography
+          variant="body"
+          as="p"
+          className="sm:col-span-1 text-(--text-tetiary) max-sm:col-start-2 max-sm:row-start-1 max-sm:text-end"
         >
-          <span className={`h-2 w-2 rounded-full ${statusClasses.dot}`} />
-          <Typography
-            variant="h3"
-            as="span"
-            className={`capitalize ${statusClasses.label}`}
-          >
-            {invoice.status}
-          </Typography>
-        </span>
+          {invoice.clientName}
+        </Typography>
 
-        <ChevronRight className="h-4 w-4 text-(--accent-primary) max-sm:hidden" />
-      </div>
-    </article>
+        <Typography
+          variant="h3"
+          as="p"
+          className="text-(--text-primary) max-sm:row-start-3"
+        >
+          £ {formatCurrency(invoice.total)}
+        </Typography>
+
+        <div className="flex items-center gap-4 max-sm:justify-end max-sm:row-start-2 max-sm:col-start-2 max-sm:row-span-2">
+          <span
+            className={`inline-flex min-w-26 items-center justify-center gap-2 rounded-md px-4 py-3 ${statusClasses.badge}`}
+          >
+            <span className={`h-2 w-2 rounded-full ${statusClasses.dot}`} />
+            <Typography
+              variant="h3"
+              as="span"
+              className={`capitalize ${statusClasses.label}`}
+            >
+              {invoice.status}
+            </Typography>
+          </span>
+
+          <ChevronRight className="h-4 w-4 text-(--accent-primary) max-sm:hidden" />
+        </div>
+      </Link>
+    </li>
   );
 };
 
 const InvoiceCards = ({ invoices }: InvoiceCardProps) => {
-  const listRef = useRef<HTMLDivElement | null>(null);
+  const listRef = useRef<HTMLUListElement | null>(null);
   const [isOverflowing, setIsOverflowing] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -152,7 +146,7 @@ const InvoiceCards = ({ invoices }: InvoiceCardProps) => {
   }
 
   return (
-    <div
+    <ul
       ref={listRef}
       className={`mt-13.75 lg:mt-16 flex flex-col gap-4 overflow-y-auto max-h-screen pb-7 ${
         isOverflowing ? "pr-2" : ""
@@ -173,11 +167,9 @@ const InvoiceCards = ({ invoices }: InvoiceCardProps) => {
           </Typography>
         </div>
       ) : (
-        invoices.map((invoice) => (
-          <InvoiceCard key={invoice.id} {...invoice} />
-        ))
+        invoices.map((invoice) => <InvoiceCard key={invoice.id} {...invoice} />)
       )}
-    </div>
+    </ul>
   );
 };
 
