@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Button, Input, Typography } from "../common";
 
 import {
@@ -20,6 +20,9 @@ export default function InvoiceForm({
   onSaveAndSend,
   onSaveChanges,
 }: InvoiceFormProps) {
+  const dialogRef = useRef<HTMLElement | null>(null);
+  const dialogTitleId = useId();
+  const paymentTermsId = useId();
   const itemInputTextClass = "text-[15px] leading-3.75 tracking-[-0.25px]";
   const { formValues, updateField, updateItem, addItem, removeItem } =
     useInvoiceFormValues(initialValues);
@@ -32,11 +35,45 @@ export default function InvoiceForm({
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    const dialogElement = dialogRef.current;
+    const focusableSelector =
+      "button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])";
+    const focusableElements = dialogElement
+      ? Array.from(dialogElement.querySelectorAll<HTMLElement>(focusableSelector))
+      : [];
+    const firstFocusableElement = focusableElements.at(0);
+    const lastFocusableElement = focusableElements.at(-1);
+    firstFocusableElement?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key !== "Tab" || !firstFocusableElement || !lastFocusableElement) {
+        return;
+      }
+
+      if (event.shiftKey && document.activeElement === firstFocusableElement) {
+        event.preventDefault();
+        lastFocusableElement.focus();
+        return;
+      }
+
+      if (!event.shiftKey && document.activeElement === lastFocusableElement) {
+        event.preventDefault();
+        firstFocusableElement.focus();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
 
     return () => {
+      window.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = previousOverflow;
     };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) {
     return null;
@@ -88,10 +125,16 @@ export default function InvoiceForm({
         onClick={onClose}
       />
 
-      <aside className="absolute left-0 top-0 h-full w-full max-w-xl md:max-w-2xl sm:rounded-tr-[20px] sm:rounded-br-[20px] overflow-y-auto bg-(--bg-page) px-6 pt-7 shadow-[0_24px_24px_rgba(0,0,0,0.18)] sm:px-10">
+      <aside
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={dialogTitleId}
+        className="absolute left-0 top-0 h-full w-full max-w-xl md:max-w-2xl sm:rounded-tr-[20px] sm:rounded-br-[20px] overflow-y-auto bg-(--bg-page) px-6 pt-7 shadow-[0_24px_24px_rgba(0,0,0,0.18)] sm:px-10"
+      >
         <div className="pb-8">
           <div className="mb-10 flex items-center">
-            <Typography variant="h2" as="h2">
+            <Typography variant="h2" as="h2" id={dialogTitleId}>
               {mode === "edit" ? "Edit #" : "New Invoice"}
               {mode === "edit" && initialValues?.invoiceId ? (
                 <span>{initialValues.invoiceId}</span>
@@ -274,10 +317,14 @@ export default function InvoiceForm({
                   />
 
                   <div>
-                    <label className="mb-2 block text-xs font-medium text-(--text-secondary)">
+                    <label
+                      htmlFor={paymentTermsId}
+                      className="mb-2 block text-xs font-medium text-(--text-secondary)"
+                    >
                       Payment Terms
                     </label>
                     <select
+                      id={paymentTermsId}
                       className="h-12 w-full rounded-md border border-(--border-default) bg-(--bg-surface) px-4 text-xs font-bold text-(--text-primary) outline-none focus:border-(--accent-primary)"
                       value={formValues.paymentTerms}
                       onChange={(event) => {
