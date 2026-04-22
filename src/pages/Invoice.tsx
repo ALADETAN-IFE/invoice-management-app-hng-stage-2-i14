@@ -461,7 +461,7 @@ const Invoice = () => {
         >
           Delete
         </Button>
-        {invoice.status !== "paid" && (
+        {invoice.status === "pending" && (
           <Button
             variant="primary"
             size="md"
