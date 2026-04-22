@@ -1,21 +1,14 @@
 import { useMemo, useState } from "react";
-import { DashboardHeader, InvoiceCards } from "@/components/ui";
-import invoiceData from "@/data";
-
-type InvoiceStatus = "draft" | "pending" | "paid";
-
-interface Invoice {
-  id: string;
-  dueDate: string;
-  clientName: string;
-  total: number;
-  status: InvoiceStatus;
-};
-
-const invoices = invoiceData as Invoice[];
+import { DashboardHeader, InvoiceCards, InvoiceForm } from "@/components/ui";
+import { type InvoiceStatus } from "@/data";
+import { useInvoices } from "@/context/useInvoices";
+import { buildInvoiceFromForm } from "@/utils/invoice-mapper";
+import type { InvoiceFormValues } from "@/components/ui/invoice-form";
 
 const Dashboard = () => {
+  const { invoices, createInvoice } = useInvoices();
   const [selectedStatus, setSelectedStatus] = useState<InvoiceStatus | null>(null);
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
 
   const filteredInvoices = useMemo(() => {
     if (!selectedStatus) {
@@ -23,7 +16,12 @@ const Dashboard = () => {
     }
 
     return invoices.filter((invoice) => invoice.status === selectedStatus);
-  }, [selectedStatus]);
+  }, [invoices, selectedStatus]);
+
+  const handleCreateInvoice = (values: InvoiceFormValues, status: InvoiceStatus) => {
+    const nextInvoice = buildInvoiceFromForm(values, { status });
+    createInvoice(nextInvoice);
+  };
 
   return (
     <div className="w-full h-full flex justify-center pt-8 sm:pt-15.25 lg:pt-19.25">
@@ -33,8 +31,27 @@ const Dashboard = () => {
           filteredCount={filteredInvoices.length}
           selectedStatus={selectedStatus}
           onStatusChange={setSelectedStatus}
+          onCreateInvoice={() => {
+            setIsCreateOpen(true);
+          }}
         />
         <InvoiceCards invoices={filteredInvoices} />
+
+        {isCreateOpen ? (
+          <InvoiceForm
+            isOpen={isCreateOpen}
+            mode="create"
+            onSaveDraft={(values: InvoiceFormValues) => {
+              handleCreateInvoice(values, "draft");
+            }}
+            onSaveAndSend={(values: InvoiceFormValues) => {
+              handleCreateInvoice(values, "pending");
+            }}
+            onClose={() => {
+              setIsCreateOpen(false);
+            }}
+          />
+        ) : null}
       </div>
     </div>
   );

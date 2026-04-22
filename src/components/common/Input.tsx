@@ -26,14 +26,25 @@ export default function Input({
 
   return (
     <div className="w-full">
-      {label ? (
-        <label
-          htmlFor={inputId}
-          className="mb-2 block text-xs font-medium text-(--text-secondary)"
-        >
-          {label}
-        </label>
-      ) : null}
+      <div className="flex items-center justify-between">
+        {label ? (
+          <label
+            htmlFor={inputId}
+            className={`mb-2 block text-xs font-medium ${error ? "text-(--danger)" : "text-(--text-secondary)"}`}
+          >
+            {label}
+          </label>
+        ) : null}
+
+        {error ? (
+          <p
+            id={`${inputId}-error`}
+            className="mb-2 text-[11px] font-semibold text-(--danger)"
+          >
+            {error}
+          </p>
+        ) : null}
+      </div>
 
       <input
         id={inputId}
@@ -53,15 +64,6 @@ export default function Input({
           className="mt-2 text-[11px] text-(--text-muted)"
         >
           {hint}
-        </p>
-      ) : null}
-
-      {error ? (
-        <p
-          id={`${inputId}-error`}
-          className="mt-2 text-[11px] font-semibold text-(--danger)"
-        >
-          {error}
         </p>
       ) : null}
     </div>

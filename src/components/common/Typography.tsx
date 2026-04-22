@@ -17,7 +17,7 @@ type TypographyProps<T extends ElementType> = {
 } & Omit<ComponentPropsWithoutRef<T>, "as" | "className">;
 
 const VARIANT_CLASS_MAP: Record<TypographyVariant, string> = {
-  h1: "text-[24px] sm:text-[36px] font-bold tracking-[-0.75px] lg:tracking-[-1.13px] text-(--text-primary)",
+  h1: "text-2xl sm:text-4xl font-bold tracking-[-0.75px] lg:tracking-[-1.13px] text-(--text-primary)",
   h2: "text-2xl leading-[1.15] font-bold tracking-[-0.75px] text-(--text-primary)",
   h3: "text-base leading-6 font-bold tracking-[-0.5px] text-(--text-primary)",
   h4: "text-xs leading-[1.25] font-bold tracking-[-0.25px] text-(--text-secondary)",

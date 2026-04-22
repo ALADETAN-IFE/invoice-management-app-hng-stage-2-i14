@@ -9,6 +9,7 @@ interface DashboardHeaderProps {
   filteredCount: number;
   selectedStatus: InvoiceStatus | null;
   onStatusChange: (status: InvoiceStatus | null) => void;
+  onCreateInvoice: () => void;
 }
 
 const STATUS_OPTIONS: InvoiceStatus[] = ["draft", "pending", "paid"];
@@ -18,8 +19,11 @@ const DashboardHeader = ({
   filteredCount,
   selectedStatus,
   onStatusChange,
+  onCreateInvoice,
 }: DashboardHeaderProps) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [summaryText, setSummaryText] = useState("");
+  const [mobileSummaryText, setMobileSummaryText] = useState("");
   const filterRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -40,13 +44,15 @@ const DashboardHeader = ({
     };
   }, []);
 
-  const summaryText = selectedStatus
-    ? `There ${filteredCount > 1 ? "are" : "is"} ${String(filteredCount)} ${selectedStatus} ${filteredCount > 1 ? "invoices" : "invoice"}`
-    : `There are ${String(totalCount)} total invoices`;
 
-  const mobileSummaryText = selectedStatus
-    ? `${String(filteredCount)} ${selectedStatus} ${filteredCount > 1 ? "invoices" : "invoice"}`
-    : `${String(totalCount)} total invoices`;
+  setTimeout(() => {
+    setSummaryText(selectedStatus
+      ? `There ${filteredCount > 1 ? "are" : "is"} ${String(filteredCount)} ${selectedStatus} ${filteredCount > 1 ? "invoices" : "invoice"}`
+      : `There are ${String(totalCount)} total invoices`);
+    setMobileSummaryText(selectedStatus
+      ? `${String(filteredCount)} ${selectedStatus} ${filteredCount > 1 ? "invoices" : "invoice"}`
+      : `${String(totalCount)} total invoices`);
+  }, 2000);
 
   const handleStatusSelect = (status: InvoiceStatus) => {
     if (selectedStatus === status) {
@@ -138,6 +144,8 @@ const DashboardHeader = ({
         <Button
           variant="primary"
           startIcon={<Cross fill="current" size={10} />}
+          onClick={onCreateInvoice}
+          disabled={!summaryText || !mobileSummaryText}
         >
           New Invoice
         </Button>

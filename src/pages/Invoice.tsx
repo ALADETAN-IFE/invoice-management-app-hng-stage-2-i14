@@ -1,36 +1,15 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import { Button, Typography } from "../components/common";
-import invoiceData from "@/data";
+import { useMemo, useState } from "react";
+import { DeleteConfirmation, InvoiceForm } from "@/components/ui";
+import { type StoredInvoice } from "@/data";
+import { useInvoices } from "@/context/useInvoices";
+import { buildInvoiceFromForm } from "@/utils/invoice-mapper";
+import type { InvoiceFormValues } from "@/components/ui/invoice-form";
 
 type InvoiceStatus = "draft" | "pending" | "paid";
-
-interface InvoiceItem {
-  name: string;
-  qty: number;
-  price: number;
-  total: number;
-}
-
-interface InvoiceDetail {
-  id: string;
-  status: InvoiceStatus;
-  description: string;
-  dueDate: string;
-  invoiceDate: string;
-  billTo: {
-    name: string;
-    street: string;
-    city: string;
-    postCode: string;
-    country: string;
-  };
-  sentTo: string;
-  paymentDue: string;
-  items: InvoiceItem[];
-  total: number;
-  clientName?: string;
-}
+type InvoiceDetail = StoredInvoice;
 
 const statusClassMap: Record<
   InvoiceStatus,
@@ -60,21 +39,31 @@ const formatCurrency = (value: number) => {
   });
 };
 
-const senderAddress = {
-  street: "19 Union Terrace",
-  city: "London",
-  postCode: "E1 3EZ",
-  country: "United Kingdom",
+const toInputDate = (value: string) => {
+  const parsed = new Date(value);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return "";
+  }
+
+  const year = String(parsed.getFullYear());
+  const month = String(parsed.getMonth() + 1).padStart(2, "0");
+  const day = String(parsed.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 };
 
 const Invoice = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { invoices, updateInvoice, deleteInvoice } = useInvoices();
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   // Find invoice by id
-  const invoice: InvoiceDetail | undefined = (
-    invoiceData as InvoiceDetail[]
-  ).find((inv) => inv.id === id);
+  const invoice: InvoiceDetail | undefined = useMemo(
+    () => invoices.find((inv) => inv.id === id),
+    [id, invoices]
+  );
 
   if (!invoice) {
     return (
@@ -108,6 +97,19 @@ const Invoice = () => {
   }
 
   const statusClasses = statusClassMap[invoice.status];
+  const markAsPaid = () => {
+    if (invoice.status === "paid") {
+      return;
+    }
+
+    updateInvoice(invoice.id, { ...invoice, status: "paid" });
+  };
+
+  const confirmDelete = () => {
+    deleteInvoice(invoice.id);
+    setIsDeleteOpen(false);
+    void navigate("/");
+  };
 
   return (
     <div className="w-full flex justify-center pt-8 sm:pt-15.25 lg:pt-19.25 pb-36.75 sm:pb-13.75">
@@ -148,15 +150,36 @@ const Invoice = () => {
             </span>
           </div>
           <div className="hidden sm:flex gap-2 sm:w-auto">
-            <Button variant="draft" size="md" className="rounded-3xl!">
+            <Button
+              variant="draft"
+              size="md"
+              className="rounded-3xl!"
+              onClick={() => {
+                setIsEditOpen(true);
+              }}
+            >
               Edit
             </Button>
-            <Button variant="delete" size="md" className="rounded-3xl!">
+            <Button
+              variant="delete"
+              size="md"
+              className="rounded-3xl!"
+              onClick={() => {
+                setIsDeleteOpen(true);
+              }}
+            >
               Delete
             </Button>
-            <Button variant="primary" size="md" className="rounded-3xl!">
-              Mark as Paid
-            </Button>
+            {invoice.status !== "paid" && (
+              <Button
+                variant="primary"
+                size="md"
+                className="rounded-3xl!"
+                onClick={markAsPaid}
+              >
+                Mark as Paid
+              </Button>
+            )}
           </div>
         </div>
 
@@ -179,13 +202,13 @@ const Invoice = () => {
                 as="p"
                 className="text-(--text-secondary) sm:text-right"
               >
-                {senderAddress.street}
+                {invoice.billFrom.street}
                 <br />
-                {senderAddress.city}
+                {invoice.billFrom.city}
                 <br />
-                {senderAddress.postCode}
+                {invoice.billFrom.postCode}
                 <br />
-                {senderAddress.country}
+                {invoice.billFrom.country}
               </Typography>
             </div>
 
@@ -375,17 +398,84 @@ const Invoice = () => {
           </div>
         </div>
       </div>
+      {isEditOpen ? (
+        <InvoiceForm
+          isOpen={isEditOpen}
+          mode="edit"
+          initialValues={{
+            invoiceId: invoice.id,
+            senderStreet: invoice.billFrom.street,
+            senderCity: invoice.billFrom.city,
+            senderPostCode: invoice.billFrom.postCode,
+            senderCountry: invoice.billFrom.country,
+            clientName: invoice.billTo.name,
+            clientEmail: invoice.sentTo,
+            clientStreet: invoice.billTo.street,
+            clientCity: invoice.billTo.city,
+            clientPostCode: invoice.billTo.postCode,
+            clientCountry: invoice.billTo.country,
+            invoiceDate: toInputDate(invoice.invoiceDate),
+            paymentTerms: 30,
+            projectDescription: invoice.description,
+            items: invoice.items.map((item, index) => ({
+              id: `${invoice.id}-${String(index)}`,
+              name: item.name,
+              quantity: item.qty,
+              price: item.price,
+            })),
+          }}
+          onSaveChanges={(values: InvoiceFormValues) => {
+            const nextInvoice = buildInvoiceFromForm(values, {
+              status: invoice.status,
+              idOverride: invoice.id,
+            });
+            updateInvoice(invoice.id, nextInvoice);
+          }}
+          onClose={() => {
+            setIsEditOpen(false);
+          }}
+        />
+      ) : null}
       <div className="flex gap-2 fixed bottom-0 w-full justify-center items-center py-5.25 bg-(--sidebar-bg) sm:hidden">
-        <Button variant="draft" size="md" className="rounded-3xl!">
+        <Button
+          variant="draft"
+          size="md"
+          className="rounded-3xl!"
+          onClick={() => {
+            setIsEditOpen(true);
+          }}
+        >
           Edit
         </Button>
-        <Button variant="delete" size="md" className="rounded-3xl!">
+        <Button
+          variant="delete"
+          size="md"
+          className="rounded-3xl!"
+          onClick={() => {
+            setIsDeleteOpen(true);
+          }}
+        >
           Delete
         </Button>
-        <Button variant="primary" size="md" className="rounded-3xl!">
-          Mark as Paid
-        </Button>
+        {invoice.status !== "paid" && (
+          <Button
+            variant="primary"
+            size="md"
+            className="rounded-3xl!"
+            onClick={markAsPaid}
+          >
+            Mark as Paid
+          </Button>
+        )}
       </div>
+      <DeleteConfirmation
+        isOpen={isDeleteOpen}
+        invoiceId={invoice.id}
+        onCancel={() => {
+          setIsDeleteOpen(false);
+        }}
+        onConfirm={confirmDelete}
+      />
     </div>
   );
 };

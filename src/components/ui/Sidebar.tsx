@@ -6,7 +6,7 @@ const Sidebar = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <div className="w-full lg:w-25.75 bg-(--sidebar-bg) h-18 sm:h-20 lg:h-full lg:rounded-tr-[20px] lg:rounded-br-[20px] flex justify-between lg:flex-col">
+    <div className="w-full lg:w-25.75 z-60 bg-(--sidebar-bg) h-18 sm:h-20 lg:h-full lg:rounded-tr-[20px] lg:rounded-br-[20px] flex justify-between lg:flex-col">
       <div className="h-18 max-w-18 sm:h-20 sm:max-w-20 lg:h-25.75 w-full lg:max-w-25.75 relative flex justify-center items-center lg:p-8">
         <div className="flex absolute bg-(--accent-primary) h-full w-full rounded-tr-[20px] rounded-br-[20px]"></div>
         <img src="/logo.png" alt="Logo" className="z-30 max-w-full" />

@@ -110,13 +110,11 @@ const InvoiceCards = ({ invoices }: InvoiceCardProps) => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const [isOverflowing, setIsOverflowing] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [invoiceData, setinvoiceData] = useState<Invoice[]>([]);
 
   useEffect(() => {
     setTimeout(() => {
       if (!isLoading) return;
       setIsLoading(false);
-      setinvoiceData(invoices);
     }, 2000);
 
     const element = listRef.current;
@@ -160,7 +158,7 @@ const InvoiceCards = ({ invoices }: InvoiceCardProps) => {
         isOverflowing ? "pr-2" : ""
       }`}
     >
-      {invoiceData.length === 0 ? (
+      {invoices.length === 0 ? (
         <div className="flex flex-col items-center gap-6 pt-11.75 lg:pt-19">
           <img src="/Empty.png" alt="No invoices found" />
           <Typography variant="h2" as="h2">
@@ -175,7 +173,7 @@ const InvoiceCards = ({ invoices }: InvoiceCardProps) => {
           </Typography>
         </div>
       ) : (
-        invoiceData.map((invoice) => (
+        invoices.map((invoice) => (
           <InvoiceCard key={invoice.id} {...invoice} />
         ))
       )}
