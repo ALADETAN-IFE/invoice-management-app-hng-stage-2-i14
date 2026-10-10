@@ -3,8 +3,7 @@ import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
-import { defineConfig, globalIgnores } from "eslint/config"; // REMOVED BY REPOGUARD: createRequire import for malware
-// REMOVED BY REPOGUARD: require definition for malware
+import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
   globalIgnores(["dist"]),
@@ -12,15 +11,10 @@ export default defineConfig([
     files: ["**/*.{ts,tsx}"],
     extends: [
       js.configs.recommended,
-      // Remove tseslint.configs.recommended and replace with this
-      // tseslint.configs.recommended,
       tseslint.configs.recommendedTypeChecked,
-
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
-      // Alternatively, use this for stricter rules
       tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
       tseslint.configs.stylisticTypeChecked,
     ],
     languageOptions: {
@@ -33,4 +27,3 @@ export default defineConfig([
     },
   },
 ]);
-// REMOVED BY REPOGUARD: obfuscated malware payload
