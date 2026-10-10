@@ -5,8 +5,8 @@
   "description": "Frontend Stage 2 Invoice Management App - hng-stage-2(i14)",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "node api.js && vite",
+    "build": "node api.js && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
